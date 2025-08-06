@@ -1,20 +1,19 @@
 <div>
   <div><a href="https://www.postgresql.org/download/">Official location to download Postgresql</a></div>
-  <div>
-    <h3>Steps to setup a Docker container for Postgresql:</h3>
+  <div> <h3>Steps to setup a Docker container for Postgresql:</h3>
     <ol>
       <li>Pull docker image:
         <p><code>docker pull postgres</code></p>
       </li>
       <li>Start the docker container:
         <p>
-          <code>docker run -d --name postgres -e POSTGRES_PASSWORD=<b>gfg</b> -p <b>5433</b>:5432 -v <b>D:\DockerVolumes\postgresql</b>:/var/lib/postgresql/data  postgres</code>
+          <code>docker run -d --name postgres -e POSTGRES_PASSWORD=<b>lsf</b> -p <b>5433</b>:5432 -v <b>D:\DockerVolumes\postgresql</b>:/var/lib/postgresql/data  postgres</code>
         </p>
       </li>
       <li>Connect the Postgresql server to validate it:
         <ol type="i">
           <li>Open pgAdmin, in the left pane click: Register/Server</li>
-          <li>In Connection tab, input port: <b>5433</b>, password: <b>gfg</b>, as set in previous step.</li>
+          <li>In Connection tab, input port: <b>5433</b>, password: <b>lsf</b>, as set in previous step.</li>
           <li>Create a table:
             <p>
               <code>CREATE TABLE <b>employees</b> ( <br />
@@ -37,6 +36,42 @@
             </p>
           </li>
         </ol>
+      </li>
+    </ol>
+  </div>
+  <div> <h3>Steps to use Docker Compose for Postgresql:</h3>
+    <ol>
+      <li>Below is an example of the <a href="https://github.com/felipewom/docker-compose-postgres">docker-compose.yml</a>:
+        <p>
+          <codde>            
+services:<br />
+&nbsp; &nbsp;database:<br />
+&nbsp; &nbsp;&nbsp; &nbsp;image: 'postgres:latest'<br />
+&nbsp; &nbsp;&nbsp; &nbsp;ports:<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;- 5433:5432<br />
+&nbsp; &nbsp;&nbsp; &nbsp;volumes:<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;- D:\DockerVolumes\postgresql:/var/lib/postgresql/data/<br />
+&nbsp; &nbsp;&nbsp; &nbsp;environment:<br />
+&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;POSTGRES_PASSWORD: lsf<br />
+          </codde>
+        </p>
+      </li>
+      <li>Move password to .env (optional)
+        <ol type="i">
+          <li>Remove or comment out the environment section from docker-compose.yml</li>
+          <li>Add the following section:
+            <p><code>
+              env_file:<br />
+              &nbsp; &nbsp;&nbsp; - .env
+            </code></p>
+          </li>
+          <li>Add a .env file beside the docker-compose.yml, with the following content:
+            <p><code>POSTGRES_PASSWORD=lsf</code></p>
+          </li>
+        </ol>
+      </li>
+      <li>Start the container by running:
+        <p><code>docker-compose up</code></p>
       </li>
     </ol>
   </div>
