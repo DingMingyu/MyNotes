@@ -1,0 +1,43 @@
+<div>
+  <div><a href="https://www.postgresql.org/download/">Official location to download Postgresql</a></div>
+  <div>
+    <h3>Steps to setup a Docker container for Postgresql:</h3>
+    <ol>
+      <li>Pull docker image:
+        <p><code>docker pull postgres</code></p>
+      </li>
+      <li>Start the docker container:
+        <p>
+          <code>docker run -d --name postgres -e POSTGRES_PASSWORD=<b>gfg</b> -p <b>5433</b>:5432 -v <b>D:\DockerVolumes\postgresql</b>:/var/lib/postgresql/data  postgres</code>
+        </p>
+      </li>
+      <li>Connect the Postgresql server to validate it:
+        <ol type="i">
+          <li>Open pgAdmin, in the left pane click: Register/Server</li>
+          <li>In Connection tab, input port: <b>5433</b>, password: <b>gfg</b>, as set in previous step.</li>
+          <li>Create a table:
+            <p>
+              <code>CREATE TABLE <b>employees</b> ( <br />
+                  &nbsp; &nbsp;id SERIAL PRIMARY KEY, <br />
+                  &nbsp; &nbsp;name VARCHAR(100) NOT NULL, <br />
+                  &nbsp; &nbsp;role VARCHAR(50), <br />
+                  &nbsp; &nbsp;salary DECIMAL(10, 2), <br />
+                  &nbsp; &nbsp;hired_on DATE NOT NULL DEFAULT CURRENT_DATE <br />
+                  );
+                  </code>
+            </p>
+          </li>
+          <li>Delete the docker container.</li>
+          <li>Check if the data files are persisted under <b>D:\DockerVolumes\postgresql</b>.</li>
+          <li>Run the command in Step 2 to start the container again.</li>
+          <li>Connect with pgAdmin again, check if the registered server is still valid, and the table <b>employees</b>
+            still exists.
+            <p>
+              <code>select * FROM pg_catalog.pg_tables where tablename='employees'; </code>
+            </p>
+          </li>
+        </ol>
+      </li>
+    </ol>
+  </div>
+</div>
